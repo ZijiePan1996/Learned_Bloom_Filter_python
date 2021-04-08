@@ -4,6 +4,7 @@ from sklearn import datasets
 from sklearn import metrics
 from sklearn import model_selection
 import matplotlib.pyplot as plt
+from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 import os
 
@@ -61,6 +62,11 @@ if __name__ == "__main__":
     testSet = transfer_to_TestArray(test_df)
     x_train, x_test, y_train, y_test = \
         model_selection.train_test_split(trainSet, testSet, random_state=1, test_size=0.2)
-    classifier = svm.SVC(kernel='linear', gamma=0.1, decision_function_shape='ovo', C=0.1)
-    classifier.fit(x_train, y_train)
-    print(classifier.score(x_train, y_train))
+
+    svmclassifier = svm.SVC(kernel='linear', gamma=0.1, decision_function_shape='ovo', C=0.1)
+    svmclassifier.fit(x_train, y_train)
+    print(svmclassifier.score(x_train, y_train))
+    rf0 = RandomForestClassifier(oob_score=True, random_state=10)
+    rf0.fit(x_train, y_train)
+    print(rf0.oob_score_)
+
